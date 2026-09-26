@@ -1,0 +1,25 @@
+name: LeafFlags
+version: '1.0.0'
+main: com.leafsmp.flags.FlagsPlugin
+api-version: '1.21'
+author: LeafSMP
+softdepend: [PlaceholderAPI, MiniPlaceholders]
+
+commands:
+  setflag:
+    description: Ulozi/aktualizuje texturu vlajky pro dany kod zeme
+    usage: /setflag <kod> <hash>
+    permission: leafflags.admin
+  delflag:
+    description: Smaze ulozenou vlajku
+    usage: /delflag <kod>
+    permission: leafflags.admin
+  flagtest:
+    description: Zobrazi ulozenou vlajku v chatu
+    usage: /flagtest <kod>
+    permission: leafflags.admin
+
+permissions:
+  leafflags.admin:
+    description: Sprava vlajkoveho systemu
+    default: op

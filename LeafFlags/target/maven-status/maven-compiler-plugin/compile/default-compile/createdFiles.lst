@@ -1,0 +1,11 @@
+com\leafsmp\flags\papi\FlagsExpansion.class
+com\leafsmp\flags\command\SetFlagCommand.class
+com\leafsmp\flags\mini\MiniPlaceholdersHook.class
+com\leafsmp\flags\command\FlagTestCommand.class
+com\leafsmp\flags\FlagsPlugin.class
+com\leafsmp\flags\command\DelFlagCommand.class
+com\leafsmp\flags\FlagApplier.class
+com\leafsmp\flags\FlagStorage.class
+com\leafsmp\flags\FlagApplier$1.class
+com\leafsmp\flags\FlagIcon.class
+com\leafsmp\flags\JoinListener.class
