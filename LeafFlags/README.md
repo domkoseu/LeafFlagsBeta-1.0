@@ -1,45 +1,40 @@
 # LeafFlags
 
-Java (Paper 1.21.11) port tveho Skript souboru pro vlajky hracu podle GeoIP zeme.
+Java (Paper 1.21.11) port of your Skript file for player flags based on their GeoIP country.
 
 ## Build
 
-```
+```text
 mvn clean package
 ```
 
-Vysledny JAR: `target/LeafFlags.jar` - hod ho do `plugins/` vedle PlaceholderAPI
-(vyzaduje take expanzi `geolocation`, stejne jako drivejsi Skript pouzival
-`%%geolocation_countryCode%%`).
+The resulting JAR will be located at `target/LeafFlags.jar`. Put it into the `plugins/` folder alongside PlaceholderAPI.
 
-## Prikazy (stejne jako v originale)
+It also requires the `geolocation` expansion, just like the previous Skript used `%%geolocation_countryCode%%`.
 
-- `/setflag <kod> <hash>` - ulozi/aktualizuje texturu vlajky
-- `/delflag <kod>` - smaze ulozenou vlajku
-- `/flagtest <kod>` - zobrazi vlajku v chatu (jen hrac)
+## Commands (same as the original)
 
-Tab-completion je stejna jako drive: `/setflag` nabizi kody BEZ vlajky,
-`/delflag` a `/flagtest` nabizi kody, ktere uz vlajku MAJI.
+* `/setflag <code> <hash>` — saves/updates a flag texture
+* `/delflag <code>` — deletes a saved flag
+* `/flagtest <code>` — displays a flag in chat (player only)
 
-## PlaceholderAPI - %flags%
+Tab completion works the same as before:
 
-- `%flags%` / `%flags_code%` -> dvoupismenny kod zeme hrace, napr. `cz`
-  (prazdny retezec, pokud hrac jeste nema prirazenou vlajku)
-- `%flags_has%` -> `yes` / `no`
+* `/setflag` suggests codes **WITHOUT** a flag
+* `/delflag` and `/flagtest` suggest codes that **already HAVE** a flag
 
-Dulezite: PAPI vraci vzdy jen cisty text, ne bohaty Component, takze
-`%flags%` NEMUZE zobrazit samotnou ikonu hlavy - tu porad resi primo
-scoreboard-team suffix (FlagApplier), stejne jako to delal puvodni skript.
-Pokud potrebujes vlajku jako skutecnou ikonu v necem, co cte MiniMessage
-(napr. TAB), plugin navic (pokud je nainstalovany plugin "MiniPlaceholders")
-registruje `<flags_flag>` a `<flags_code>`, ktere uz vraci realnou ikonu.
+## PlaceholderAPI — %flags%
 
-## Poznamky k portu
+* `%flags%` / `%flags_code%` → two-letter country code of the player, e.g. `cz`
+  (empty string if the player does not have a flag assigned yet)
+* `%flags_has%` → `yes` / `no`
 
-- `Component.object(...)` / `ObjectContents.playerHead()...` (embed hlavy
-  primo v textu) vyzaduje Minecraft 1.21.9+ / Adventure 4.25.0+ - 1.21.11
-  to splnuje.
-- Seznam kodu zemi a logika "on join -> wait 1s -> applyFlag" jsou 1:1
-  prevzate z puvodniho Skriptu.
-- Data se ukladaji do `plugins/LeafFlags/flags.yml` (misto Skript promenne
-  `{flags::*}`).
+Important: PAPI always returns plain text, not a rich Component, so `%flags%` **CANNOT display the actual player-head icon** by itself. The icon is still handled directly by the scoreboard-team suffix (`FlagApplier`), just like the original Skript did.
+
+If you need the flag as an actual icon somewhere that supports MiniMessage (e.g. TAB), the plugin additionally registers `<flags_flag>` and `<flags_code>` when the `MiniPlaceholders` plugin is installed. These return the actual icon.
+
+## Port Notes
+
+* `Component.object(...)` / `ObjectContents.playerHead(...)` (embedding heads directly into text) requires Minecraft 1.21.9+ / Adventure 4.25.0+. Paper 1.21.11 meets these requirements.
+* The country code list and the `on join → wait 1s → applyFlag` logic are ported 1:1 from the original Skript.
+* Data is stored in `plugins/LeafFlags/flags.yml` instead of the Skript variable `{flags::*}`.
